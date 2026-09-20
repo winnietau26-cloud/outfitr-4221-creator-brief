@@ -441,7 +441,7 @@ nav.bar .wrap,footer .wrap{max-width:1380px;padding-left:24px;padding-right:24px
 .feature-sidebar a:hover{background:#f8faf5}
 .feature-sidebar a[aria-current="location"]{background:#fff2e9;color:var(--blaze-deep);border-left-color:var(--blaze);font-weight:700}
 .feature-sidebar a:focus-visible,.feature-sidebar summary:focus-visible{outline:2px solid var(--blaze);outline-offset:2px}
-.shot,#ramp-grip,.content-wrap>section{scroll-margin-top:76px}
+.shot,#ramp-grip,.content-wrap>section{scroll-margin-top:8px}
 @media(min-width:1001px){.feature-sidebar summary{list-style:none;pointer-events:none}.feature-sidebar summary::-webkit-details-marker{display:none}}
 @media(max-width:1000px){
  .brief-shell{display:block;max-width:1100px}
@@ -534,7 +534,8 @@ let queued=false;
 function updateFeature(){
  queued=false;
  const targets=featureLinks.map(a=>document.getElementById(a.hash.slice(1))).filter(Boolean).sort((a,b)=>a.getBoundingClientRect().top-b.getBoundingClientRect().top);
- const current=targets.filter(el=>el.getBoundingClientRect().top<=120).pop();
+ const atBottom=innerHeight+scrollY>=document.documentElement.scrollHeight-3;
+ const current=atBottom?targets[targets.length-1]:targets.filter(el=>el.getBoundingClientRect().top<=120).pop();
  highlightFeature(current?current.id:'');
 }
 addEventListener('scroll',()=>{if(!queued){queued=true;requestAnimationFrame(updateFeature)}},{passive:true});
